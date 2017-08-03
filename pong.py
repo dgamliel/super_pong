@@ -14,7 +14,8 @@ except (ImportError, err):
     sys.exit(2)
 
 def loading_img(name):
-    fullname = os.path.join('data', name)
+    pwd = os.cwd()
+    fullname = os.path.join(pwd, name)
     try:
         image = pygame.image.load(fullname)
         if image.get_alpha() is None:
@@ -22,15 +23,17 @@ def loading_img(name):
         else:
             image = image.convert_alpha()
     except (pygame.error, message):
-        print ('Cannot load image: ', fullname)
+        print ('Cannot load image from: ', fullname)
         raise (SystemExit, message)
     return image, image.get_rect()
 
 def start_sound():
     try:
-        pygame.mixer.play()
+        pwd = os.cwd()
+        fullname = os.path.join(pwd, 'audio')
     except:
-        pass
+        print('Failed to load audio from: ', fullname)
+        raise (SystemExit)
 
 #takes a pygame.display (screen) object input
 def setup_screen(screen_obj):
@@ -90,7 +93,7 @@ def main():
     background.blit(mainTextDisplay, mainTextPos) #Blits mainText on background
     background.blit(subText, subTextPos)          #Blits subText on background (x-centered, y-360p)
     screen.blit(background,(0,0))                 #Blits background to screen
-    pygame.display.flip()
+    pygame.display.flip()                         #Refreshes screen to display blitting
 
     while True:
         for event in pygame.event.get():
