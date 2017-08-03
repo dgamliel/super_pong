@@ -41,11 +41,21 @@ def setup_screen(screen_obj):
 
     #Creates text at top
     choiceText = pygame.font.SysFont('robotocondensed', 32, bold=True)
-    choiceTextRend = choiceText.render('Choose player!', True, (250,250,250))
+    choiceTextRend = choiceText.render('Choose player count!', True, (250,250,250))
     choiceTextRect = choiceTextRend.get_rect()
     choiceTextRect.centerx = screen_obj.get_rect().centerx
     choiceTextRect.centery = 80
 
+    #Text for One player
+    onePlayer = pygame.font.SysFont('robotocondensed', 42)
+    onePlayerRend = onePlayer.render('ONE PLAYER', True, (250,250,250))
+
+    #Text for Two players
+    twoPlayer = pygame.font.SysFont('robotocondensed', 42)
+    twoPlayerRend = twoPlayer.render('TWO PLAYERS', True, (250,250,250))
+
+    screen_obj.blit(onePlayerRend, (80, 240))
+    screen_obj.blit(twoPlayerRend, (430, 240))
     screen_obj.blit(choiceTextRend, choiceTextRect)
     pygame.display.flip()
 
@@ -88,5 +98,6 @@ def main():
                 return
             elif event.type == pygame.KEYDOWN:
                 setup_screen(screen)
+                
 
 if __name__ == '__main__': main()
