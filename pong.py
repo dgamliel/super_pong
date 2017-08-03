@@ -32,9 +32,23 @@ def start_sound():
     except:
         pass
 
-def setup_screen():
-    return
-    
+#takes a pygame.display (screen) object input
+def setup_screen(screen_obj):
+
+    #clears screen
+    screen_obj.fill((0,0,0))
+    pygame.display.flip()
+
+    #Creates text at top
+    choiceText = pygame.font.SysFont('robotocondensed', 32, bold=True)
+    choiceTextRend = choiceText.render('Choose player!', True, (250,250,250))
+    choiceTextRect = choiceTextRend.get_rect()
+    choiceTextRect.centerx = screen_obj.get_rect().centerx
+    choiceTextRect.centery = 80
+
+    screen_obj.blit(choiceTextRend, choiceTextRect)
+    pygame.display.flip()
+
 
 def main():
     pygame.init() #initalizes a pygame object
@@ -49,11 +63,11 @@ def main():
     background.fill((0,0,0))                       #creates a black background
 
     #Main Text display
-    mainText = pygame.font.SysFont('robotocondensed', 32, bold=True) #creates font object
-    mainTextDisplay = mainText.render('Super Pong', True, (250,250,250))          #Renders font (will not show until blitted)
-    mainTextPos = mainTextDisplay.get_rect()
-    mainTextPos.centerx = background.get_rect().centerx
-    mainTextPos.centery = background.get_rect().centery
+    mainText = pygame.font.SysFont('robotocondensed', 32, bold=True)     #creates font object with font 'Roboto Condensed'
+    mainTextDisplay = mainText.render('Super Pong', True, (250,250,250)) #Renders font (will not show until blitted) with RGB (250,250,250)
+    mainTextPos = mainTextDisplay.get_rect()                             #Returns a rect object of mainTextDisplay stored in mainTextPos
+    mainTextPos.centerx = background.get_rect().centerx                  #centers main text at 720/2p == 360p  
+    mainTextPos.centery = background.get_rect().centery                  #centers main text at 480/2p == 240p
 
     #Subtext display
     subText = pygame.font.SysFont('robotocondensed', 24)
@@ -62,8 +76,9 @@ def main():
     subTextPos.centerx = background.get_rect().centerx
     subTextPos.y = 360
 
+    #Blits everything to the screen
     background.blit(mainTextDisplay, mainTextPos) #Blits mainText on background
-    background.blit(subText, subTextPos)  #Blits subText on background (x-centered, y-360p)
+    background.blit(subText, subTextPos)          #Blits subText on background (x-centered, y-360p)
     screen.blit(background,(0,0))                 #Blits background to screen
     pygame.display.flip()
 
@@ -72,7 +87,6 @@ def main():
             if event.type == QUIT:
                 return
             elif event.type == pygame.KEYDOWN:
-                #setup_screen()
-                return
+                setup_screen(screen)
 
 if __name__ == '__main__': main()
