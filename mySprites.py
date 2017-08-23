@@ -29,6 +29,11 @@ class CursorCover(pygame.sprite.Sprite):
 
         self.image = pygame.Surface([x,y])
 
+        #updates the rect private member var 
         self.rect = self.image.get_rect()
-        self.image.fill((0,0,0))
-        print(self.rect)
+
+        #sets the center of the rect at coordiantes x and y+100
+        self.rect.centerx = x                                      #sets center of block at center of text
+        self.rect.centery = y + 100                                #sets center of y 100 pixels below text
+
+        self.image.fill((0,0,0)) #Fills image with color black
