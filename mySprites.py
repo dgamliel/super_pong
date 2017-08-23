@@ -130,3 +130,5 @@ class PlayerBar(pygame.speed.Sprite):
     def update():
         if(!check_edge()):
             set_y()
+
+#testing change
