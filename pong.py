@@ -14,28 +14,6 @@ except ImportError:
     print ('Unable to locate libarary')
     sys.exit(2)
 
-def loading_img(name):
-    pwd = os.cwd()
-    fullname = os.path.join(pwd, name)
-    try:
-        image = pygame.image.load(fullname)
-        if image.get_alpha() is None:
-            image = image.convert()
-        else:
-            image = image.convert_alpha()
-    except (pygame.error, message):
-        print ('Cannot load image from: ', fullname)
-        raise (SystemExit, message)
-    return image, image.get_rect()
-
-def start_sound():
-    try:
-        pwd = os.cwd()
-        fullname = os.path.join(pwd, 'audio')
-    except:
-        print('Failed to load audio from: ', fullname)
-        raise (SystemExit)
-
 #takes a pygame.display (screen) object input
 def setup_screen(screen_obj):
 
@@ -58,15 +36,49 @@ def setup_screen(screen_obj):
     twoPlayer = pygame.font.SysFont('robotocondensed', 42)
     twoPlayerRend = twoPlayer.render('TWO PLAYERS', True, (250,250,250))
 
-    #loads cursor
-    cursor = mySprites.Cursor()
-
     #Blits everything to screen
     screen_obj.blit(onePlayerRend, (80, 240))
     screen_obj.blit(twoPlayerRend, (430, 240))
-    screen_obj.blit(cursor.image, cursor.rect)
+    #screen_obj.blit(cursor.image, cursor.rect)
     screen_obj.blit(choiceTextRend, choiceTextRect)
     pygame.display.flip()
+
+def cursor_blit(screen_obj, event):
+
+    cursorPlacement = 0
+
+    #Creates cursor object and cursor Cover object
+    cursor = mySprites.Cursor() #Constructor takes default x,y coord to be placed under onePlayerText
+
+    #Creates group to manage cursor covers
+    cursorCoverGroup = pygame.sprite.Group()
+
+    #Creates group to manage cursors
+    cursorGroup = pygame.sprite.Group()
+    cursorGroup.add(cursor)
+
+    #displays cursor Spite to screen
+    cursorGroup.draw(screen_obj)
+    pygame.display.flip()
+
+    if event.key == K_RIGHT:
+        cursorPlacement+=1
+        if abs(cursorPlacement) == 1 or abs(cursorPlacement) % 2 is not 0:
+
+            #creates block object and removes cursor from cursorgroup
+            block = mySprites.CursorCover(cursor)
+            cursorGroup.remove(cursor)
+
+            #creates new cursor underneath player 2 texts and adds to group
+            left_cursor = mySprites.Cursor(540,380)
+            cursorGroup.add(left_cursor)
+            cursorCoverGroup.add(block)
+            
+            #draws and updates screen
+            cursorGroup.draw(screen_obj)
+            cursorCoverGroup.draw(screen_obj)
+            cursorGroup.update()
+            pygame.display.flip()
 
 #Main function
 
@@ -109,6 +121,7 @@ def main():
                 return
             elif event.type == pygame.KEYDOWN:
                 setup_screen(screen)
+                cursor_blit(screen, event)
                 
 
 if __name__ == '__main__': main()
