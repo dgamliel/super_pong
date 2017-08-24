@@ -96,6 +96,7 @@ def game_screen(screen_obj,event):
     gameObjectGroup.draw(screen_obj)
     playerObjectGroup.draw(screen_obj)
     pygame.display.flip()
+
     while True:
             pygame.time.wait(34)
             screen_obj.fill((0,0,0))
@@ -115,10 +116,15 @@ def game_screen(screen_obj,event):
                     playerObjectGroup.draw(screen_obj)
 
 def hit_check(PlayerBar,GameBall):
-	if(PlayerBar.get_x() - GameBall.get_x() < GameBall.dx) and (PlayerBar.get_y() + 10 > GameBall.get_y() and PlayerBar.get_y() - 10 < GameBall.get_y()):
-		GameBall.set_DX(-GameBall.get_DX())
-		return True
+    playerBarRange = [PlayerBar.rect.top, PlayerBar.rect.bottom]
+    ballRange = [GameBall.rect.top, GameBall.rect.bottom]
 
+
+
+    if(PlayerBar.get_x() - GameBall.get_x() < GameBall.dx) and (PlayerBar.get_y() + 50 > GameBall.get_y() and PlayerBar.get_y() - 50 < GameBall.get_y()):
+        GameBall.set_DX(-GameBall.get_DX())
+        return True
+    
 
 #Main function
 
