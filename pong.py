@@ -97,7 +97,11 @@ def game_screen(screen_obj,event):
     gameObjectGroup.draw(screen_obj)
     playerObjectGroup.draw(screen_obj)
     pygame.display.flip()
+<<<<<<< HEAD
     #MAIN GAME LOOP
+=======
+
+>>>>>>> origin/master
     while True:
             pygame.time.wait(34) #FPS in milliseconds (wait 34 milliseconds between frames)
             screen_obj.fill((0,0,0)) #wipe screen clean before repainting objects 
@@ -121,10 +125,15 @@ def game_screen(screen_obj,event):
 
 #checks if GameBall and PlayerBar will collide in the next frame, if so, changes direction of ball
 def hit_check(PlayerBar,GameBall):
-	if(PlayerBar.get_x() - GameBall.get_x() < GameBall.dx) and (PlayerBar.get_y() + 10 > GameBall.get_y() and PlayerBar.get_y() - 10 < GameBall.get_y()):
-		GameBall.set_DX(-GameBall.get_DX())
-		return True
+    playerBarRange = [PlayerBar.rect.top, PlayerBar.rect.bottom]
+    ballRange = [GameBall.rect.top, GameBall.rect.bottom]
 
+
+
+    if(PlayerBar.get_x() - GameBall.get_x() < GameBall.dx) and (PlayerBar.get_y() + 50 > GameBall.get_y() and PlayerBar.get_y() - 50 < GameBall.get_y()):
+        GameBall.set_DX(-GameBall.get_DX())
+        return True
+    
 
 #Main function
 
