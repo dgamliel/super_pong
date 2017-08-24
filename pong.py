@@ -87,6 +87,7 @@ def game_screen(screen_obj,event):
     playerBar = mySprites.PlayerBar(540,240,0) # x , y , dy
     clock = pygame.time.Clock()
 
+    #Sets up groups for objects and player objects and draws them to screen
     gameObjectGroup = pygame.sprite.Group()
     playerObjectGroup = pygame.sprite.Group()
     gameObjectGroup.add(ball)
@@ -96,24 +97,29 @@ def game_screen(screen_obj,event):
     gameObjectGroup.draw(screen_obj)
     playerObjectGroup.draw(screen_obj)
     pygame.display.flip()
+    #MAIN GAME LOOP
     while True:
-            pygame.time.wait(34)
-            screen_obj.fill((0,0,0))
-            hit_check(playerBar,ball)
+            pygame.time.wait(34) #FPS in milliseconds (wait 34 milliseconds between frames)
+            screen_obj.fill((0,0,0)) #wipe screen clean before repainting objects 
+            hit_check(playerBar,ball) #check for collisions
             gameObjectGroup.update()
-            gameObjectGroup.draw(screen_obj)
-            playerObjectGroup.draw(screen_obj)
+            gameObjectGroup.draw(screen_obj) #draw GameBall
+            playerObjectGroup.draw(screen_obj) #draw PlayerBar
             pygame.display.flip()
+            #awaits key strokes to move PlayerBar
             for event in pygame.event.get():
+            	#downward movement
                if event.type == pygame.KEYDOWN and event.key == K_DOWN:
                     playerBar.set_DY(-30)
                     playerObjectGroup.update()
                     playerObjectGroup.draw(screen_obj)
+                #upward movement
                elif event.type == pygame.KEYDOWN and event.key == K_UP:
                     playerBar.set_DY(30)
                     playerObjectGroup.update()
                     playerObjectGroup.draw(screen_obj)
 
+#checks if GameBall and PlayerBar will collide in the next frame, if so, changes direction of ball
 def hit_check(PlayerBar,GameBall):
 	if(PlayerBar.get_x() - GameBall.get_x() < GameBall.dx) and (PlayerBar.get_y() + 10 > GameBall.get_y() and PlayerBar.get_y() - 10 < GameBall.get_y()):
 		GameBall.set_DX(-GameBall.get_DX())

@@ -53,10 +53,10 @@ class GameBall(pygame.sprite.Sprite):
         self.rect.centery = y
         self.dx = dx
         self.dy = dy
-
+    #get center x positon
     def get_x(self):
         return self.rect.centerx
-
+    #get center y position
     def get_y(self):
         return self.rect.centery
 
@@ -84,7 +84,7 @@ class GameBall(pygame.sprite.Sprite):
         #ball goes off y axis
         elif(self.rect.centery > 480 or self.rect.centery <0):
             self.dy = -self.dy
-
+    #updates the balls position based on speed and checks for edge collision
     def update(self):
     	self.set_x()
     	self.set_y()
@@ -95,38 +95,36 @@ class PlayerBar(pygame.sprite.Sprite):
     dy = 0
 
     def __init__(self,x,y,dy):
-
+    	#Initiates Sprite super
         pygame.sprite.Sprite.__init__(self)
-
+        #Loads in png and converts to rectangle
         self.image = pygame.image.load('PlayerBar.png').convert()
         self.rect = self.image.get_rect()
         self.rect.centerx = x
         self.rect.centery = y
         self.dy = dy
-
+    #get center x position
     def get_x(self):
         return self.rect.centerx
-
+    #get center y position
     def get_y(self):
         return self.rect.centery
 
     #Sets the y position of the ball
     def set_y(self):
-        self.rect.centery = self.rect.centery + self.dy
+        self.rect.centery = self.rect.centery + self.dy #this is how position changes based on speed
 
     #Sets the dy (speed) and direction of the ball
     def set_DY(self,speed):
         self.dy = speed
-
+    #Checks for edge of playable field
     def check_edge(self):
         #bar moves off y axis
         if(self.rect.centery >= 480 or self.rect.centery <= 0):
             self.dy = 0
             return True
         return False
-
+    #updates the PlayerBar position, should be used before drawing
     def update(self):
-        if(not self.check_edge()):
+        if(not self.check_edge()): #if it is not at edge of game field, update position
             self.set_y()
-
-#testing change
