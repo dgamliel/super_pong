@@ -97,6 +97,8 @@ def game_screen(screen_obj,event):
     gameObjectGroup.draw(screen_obj)
     playerObjectGroup.draw(screen_obj)
     pygame.display.flip()
+
+    
     #MAIN GAME LOOP
     while True:
             pygame.time.wait(34) #FPS in milliseconds (wait 34 milliseconds between frames)
@@ -110,22 +112,26 @@ def game_screen(screen_obj,event):
             keys = pygame.key.get_pressed()
             #awaits key strokes to move PlayerBar
             for event in pygame.event.get():
-            	#downward movement
-               if keys[pygame.K_UP]:
-                    playerBar.set_DY(10)
+                #downward movement
+                if event.type == pygame.KEYDOWN:
+                    if event.key == K_UP:
+                        playerBar.set_DY(10)
                 #upward movement
-               elif keys[pygame.K_DOWN]:
-                    playerBar.set_DY(-10)
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == K_DOWN:
+                        playerBar.set_DY(-10)
+
+                elif event.type == KEYUP:
+                    if event.type == pygame.K_UP:
+                        playerBar.set_DY(0)
+                    elif event.type == pygame.K_DOWN:
+                        playerBar.set_DY(0)
 
             playerObjectGroup.update()
             playerObjectGroup.draw(screen_obj)
 
 #checks if GameBall and PlayerBar will collide in the next frame, if so, changes direction of ball
 def hit_check(PlayerBar,GameBall):
-    playerBarRange = [PlayerBar.rect.top, PlayerBar.rect.bottom]
-    ballRange = [GameBall.rect.top, GameBall.rect.bottom]
-
-
 
     if(PlayerBar.get_x() - GameBall.get_x() < GameBall.dx) and (PlayerBar.get_y() + 50 > GameBall.get_y() and PlayerBar.get_y() - 50 < GameBall.get_y()):
         GameBall.set_DX(-GameBall.get_DX())
@@ -175,8 +181,8 @@ def main():
                 setup_screen(screen)
                 cursor_blit(screen, event)
                 if event.key == K_RETURN:
-
-                    game_screen(screen,event)
+                    pass
+            game_screen(screen,event)
 
 
    
