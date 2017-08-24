@@ -54,51 +54,49 @@ class GameBall(pygame.sprite.Sprite):
         self.dx = dx
         self.dy = dy
 
-    def get_x():
+    def get_x(self):
         return self.rect.centerx
 
-    def get_y():
+    def get_y(self):
         return self.rect.centery
 
     #Sets the x and y position of the ball
-    def set_x():
-        self.rect.centerx = self.rect.centerx + dx
-    def set_y():
-        self.rect.centery = self.rect.centery + dy
+    def set_x(self):
+        self.rect.centerx = self.rect.centerx + self.dx
+    def set_y(self):
+        self.rect.centery = self.rect.centery + self.dy
 
     #Sets the dx and dy (speed) and direction of the ball
-    def set_DX(speed):
-        dx = speed
-    def set_DY(speed):
-        dy = speed
+    def set_DX(self,speed):
+        self.dx = speed
+    def set_DY(self,speed):
+        self.dy = speed
+    def get_DX(self):
+    	return self.dx
+    def get_DY(self):
+    	return self.dy
 
     #Checks if ball will be off screen and reverses dx or dy (direction and speed) if so
-    def check_edge():
+    def check_edge(self):
         #ball goes off x axis
         if(self.rect.centerx > 720 or self.rect.centerx < 0):
-            dx = -dx
+            self.dx = -self.dx
         #ball goes off y axis
         elif(self.rect.centery > 480 or self.rect.centery <0):
-            dy = -dy
+            self.dy = -self.dy
 
-    def hit_check():
-        if((PlayerBar.get_x() - get_x() < dx) and 
-            (PlayerBar.get_y() + 2 > get_y() & PlayerBar.get_y() - 2 < get_y())):
-            
+    def update(self):
+    	self.set_x()
+    	self.set_y()
+    	self.check_edge()
 
-    def update():
-        set_x()
-        set_y()
-        check_edge()
+class PlayerBar(pygame.sprite.Sprite):
 
-class PlayerBar(pygame.speed.Sprite):
-
-    dx = 0
     dy = 0
 
     def __init__(self,x,y,dy):
 
-        pygame.speed.Sprite.__init__(self)
+        pygame.sprite.Sprite.__init__(self)
 
         self.image = pygame.image.load('PlayerBar.png').convert()
         self.rect = self.image.get_rect()
@@ -106,29 +104,29 @@ class PlayerBar(pygame.speed.Sprite):
         self.rect.centery = y
         self.dy = dy
 
-    def get_x():
+    def get_x(self):
         return self.rect.centerx
 
-    def get_y():
+    def get_y(self):
         return self.rect.centery
 
     #Sets the y position of the ball
-    def set_y():
-        self.rect.centery = self.rect.centery + dy
+    def set_y(self):
+        self.rect.centery = self.rect.centery + self.dy
 
     #Sets the dy (speed) and direction of the ball
-    def set_DY(speed):
-        dy = speed
+    def set_DY(self,speed):
+        self.dy = speed
 
-    def check_edge():
+    def check_edge(self):
         #bar moves off y axis
         if(self.rect.centery >= 480 or self.rect.centery <= 0):
-            dy = 0
+            self.dy = 0
             return True
         return False
 
-    def update():
-        if(!check_edge()):
-            set_y()
+    def update(self):
+        if(not self.check_edge()):
+            self.set_y()
 
 #testing change

@@ -80,6 +80,46 @@ def cursor_blit(screen_obj, event):
             cursorGroup.update()
             pygame.display.flip()
 
+def game_screen(screen_obj,event):
+    screen_obj.fill((0,0,0))
+    #Creates all Objects in game with set positions
+    ball = mySprites.GameBall(300,200,-10,-10) # x , y , dx , dy
+    playerBar = mySprites.PlayerBar(540,240,0) # x , y , dy
+    clock = pygame.time.Clock()
+
+    gameObjectGroup = pygame.sprite.Group()
+    playerObjectGroup = pygame.sprite.Group()
+    gameObjectGroup.add(ball)
+    playerObjectGroup.add(playerBar)
+    gameObjectGroup.update()
+    playerObjectGroup.update()
+    gameObjectGroup.draw(screen_obj)
+    playerObjectGroup.draw(screen_obj)
+    pygame.display.flip()
+    while True:
+            pygame.time.wait(34)
+            screen_obj.fill((0,0,0))
+            hit_check(playerBar,ball)
+            gameObjectGroup.update()
+            gameObjectGroup.draw(screen_obj)
+            playerObjectGroup.draw(screen_obj)
+            pygame.display.flip()
+            for event in pygame.event.get():
+               if event.type == pygame.KEYDOWN and event.key == K_DOWN:
+                    playerBar.set_DY(-30)
+                    playerObjectGroup.update()
+                    playerObjectGroup.draw(screen_obj)
+               elif event.type == pygame.KEYDOWN and event.key == K_UP:
+                    playerBar.set_DY(30)
+                    playerObjectGroup.update()
+                    playerObjectGroup.draw(screen_obj)
+
+def hit_check(PlayerBar,GameBall):
+	if(PlayerBar.get_x() - GameBall.get_x() < GameBall.dx) and (PlayerBar.get_y() + 10 > GameBall.get_y() and PlayerBar.get_y() - 10 < GameBall.get_y()):
+		GameBall.set_DX(-GameBall.get_DX())
+		return True
+
+
 #Main function
 
 def main():
@@ -122,6 +162,11 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 setup_screen(screen)
                 cursor_blit(screen, event)
-                
+                if event.key == K_RETURN:
+
+                    game_screen(screen,event)
+
+
+   
 
 if __name__ == '__main__': main()
