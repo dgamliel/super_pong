@@ -106,18 +106,19 @@ def game_screen(screen_obj,event):
             gameObjectGroup.draw(screen_obj) #draw GameBall
             playerObjectGroup.draw(screen_obj) #draw PlayerBar
             pygame.display.flip()
+
+            keys = pygame.key.get_pressed()
             #awaits key strokes to move PlayerBar
             for event in pygame.event.get():
             	#downward movement
-               if event.type == pygame.KEYDOWN and event.key == K_DOWN:
-                    playerBar.set_DY(-30)
-                    playerObjectGroup.update()
-                    playerObjectGroup.draw(screen_obj)
+               if keys[pygame.K_UP]:
+                    playerBar.set_DY(10)
                 #upward movement
-               elif event.type == pygame.KEYDOWN and event.key == K_UP:
-                    playerBar.set_DY(30)
-                    playerObjectGroup.update()
-                    playerObjectGroup.draw(screen_obj)
+               elif keys[pygame.K_DOWN]:
+                    playerBar.set_DY(-10)
+
+            playerObjectGroup.update()
+            playerObjectGroup.draw(screen_obj)
 
 #checks if GameBall and PlayerBar will collide in the next frame, if so, changes direction of ball
 def hit_check(PlayerBar,GameBall):
