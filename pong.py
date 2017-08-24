@@ -83,7 +83,7 @@ def cursor_blit(screen_obj, event):
 def game_screen(screen_obj,event):
     screen_obj.fill((0,0,0))
     #Creates all Objects in game with set positions
-    ball = mySprites.GameBall(300,200,-10,-10) # x , y , dx , dy
+    ball = mySprites.GameBall(300,200,-10,0) # x , y , dx , dy
     playerBar = mySprites.PlayerBar(540,240,0) # x , y , dy
     clock = pygame.time.Clock()
 
@@ -97,11 +97,7 @@ def game_screen(screen_obj,event):
     gameObjectGroup.draw(screen_obj)
     playerObjectGroup.draw(screen_obj)
     pygame.display.flip()
-<<<<<<< HEAD
     #MAIN GAME LOOP
-=======
-
->>>>>>> origin/master
     while True:
             pygame.time.wait(34) #FPS in milliseconds (wait 34 milliseconds between frames)
             screen_obj.fill((0,0,0)) #wipe screen clean before repainting objects 

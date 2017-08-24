@@ -120,7 +120,7 @@ class PlayerBar(pygame.sprite.Sprite):
     #Checks for edge of playable field
     def check_edge(self):
         #bar moves off y axis
-        if(self.rect.centery >= 480 or self.rect.centery <= 0):
+        if(self.rect.centery + self.dy >= 480 or self.rect.centery + self.dy <= 0):
             self.dy = 0
             return True
         return False
