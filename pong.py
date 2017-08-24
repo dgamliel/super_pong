@@ -83,7 +83,7 @@ def cursor_blit(screen_obj, event):
 def game_screen(screen_obj,event):
     screen_obj.fill((0,0,0))
     #Creates all Objects in game with set positions
-    ball = mySprites.GameBall(300,200,-10,0) # x , y , dx , dy
+    ball = mySprites.GameBall(300,200,-10,-5) # x , y , dx , dy
     playerBar = mySprites.PlayerBar(540,240,0) # x , y , dy
     clock = pygame.time.Clock()
 
@@ -99,7 +99,7 @@ def game_screen(screen_obj,event):
     pygame.display.flip()
     #MAIN GAME LOOP
     while True:
-            pygame.time.wait(34) #FPS in milliseconds (wait 34 milliseconds between frames)
+            pygame.time.wait(17) #FPS in milliseconds (wait 34 milliseconds between frames)
             screen_obj.fill((0,0,0)) #wipe screen clean before repainting objects 
             hit_check(playerBar,ball) #check for collisions
             gameObjectGroup.update()
@@ -124,11 +124,12 @@ def game_screen(screen_obj,event):
 def hit_check(PlayerBar,GameBall):
     playerBarRange = [PlayerBar.rect.top, PlayerBar.rect.bottom]
     ballRange = [GameBall.rect.top, GameBall.rect.bottom]
+    speedIncrement = 1
 
 
 
     if(PlayerBar.get_x() - GameBall.get_x() < GameBall.dx) and (PlayerBar.get_y() + 50 > GameBall.get_y() and PlayerBar.get_y() - 50 < GameBall.get_y()):
-        GameBall.set_DX(-GameBall.get_DX())
+        GameBall.set_DX(-(GameBall.get_DX() + speedIncrement))
         return True
     
 
