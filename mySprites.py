@@ -1,4 +1,15 @@
 import pygame
+import os
+
+#Obtains the path we're currently working with
+current_file_path = os.getcwd()
+
+try:
+	#Defines path of each image
+	cursor_path = current_file_path + '/files/cursor.png'
+	game_ball_path = current_file_path + '/files/GameBall.png'
+	player_bar_path = os.path.join(current_file_path + '/files/PlayerBar.png'
+
 
 class Cursor(pygame.sprite.Sprite):
 
@@ -6,7 +17,7 @@ class Cursor(pygame.sprite.Sprite):
         #Calls the constructor of the parent class
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = pygame.image.load('cursor.png').convert()
+        self.image = pygame.image.load(cursor_path).convert()
         self.rect = self.image.get_rect()
         self.rect.centerx = x
         self.rect.centery = y
@@ -47,7 +58,7 @@ class GameBall(pygame.sprite.Sprite):
         #Initiates Sprite super
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = pygame.image.load('GameBall.png').convert()
+        self.image = pygame.image.load(game_ball_path).convert()
         self.rect = self.image.get_rect()
         self.rect.centerx = x
         self.rect.centery = y
@@ -98,7 +109,7 @@ class PlayerBar(pygame.sprite.Sprite):
     	#Initiates Sprite super
         pygame.sprite.Sprite.__init__(self)
         #Loads in png and converts to rectangle
-        self.image = pygame.image.load('PlayerBar.png').convert()
+        self.image = pygame.image.load(player_bar_path).convert()
         self.rect = self.image.get_rect()
         self.rect.centerx = x
         self.rect.centery = y
